@@ -1,5 +1,5 @@
 on:
-  go:
+  "go":
     types: [completed]
 
 jobs:
