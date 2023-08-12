@@ -36,7 +36,19 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-  release-linux-amd64:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0
+        release_name: git-hooks Release 1.0.0
+        body: Release notes for version 1.0.0
     - name: release linux/amd64
       runs-on: ubuntu-latest
       strategy:
