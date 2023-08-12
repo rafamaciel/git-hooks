@@ -11,6 +11,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows, darwin]
+        goarch: [amd64, arm64]
     steps:
 
     - name: Set up Go 1.x
@@ -40,6 +44,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
+    
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -49,18 +54,14 @@ jobs:
         tag_name: v1.0.0
         release_name: git-hooks Release 1.0.0
         body: Release notes for version 1.0.0
-    - name: release linux/amd64
+    
+    - name: release binaries
       runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          goos: [linux, windows, darwin]
-          goarch: [amd64, arm64]
-      steps:
-        - uses: actions/checkout@v3
-        - uses: wangyoucao577/go-release-action@v1
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            goos: ${{ matrix.goos }}
-            goarch: ${{ matrix.goarch }}
-            asset_name: git-hooks-${{ matrix.goos }}-${{ matrix.goarch }}
-            compress_assets: OFF
+    - uses: actions/checkout@v3
+    - uses: wangyoucao577/go-release-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        asset_name: git-hooks-${{ matrix.goos }}-${{ matrix.goarch }}
+        compress_assets: OFF
