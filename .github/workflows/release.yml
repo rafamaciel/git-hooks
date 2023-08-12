@@ -1,6 +1,7 @@
+name: Create Release
 on:
   workflow_run:
-    workflows: ["Create Tag and Release on Master Workflow Completion"]
+    workflows: [Create Tag]
     types:
       - completed
 

@@ -1,8 +1,7 @@
-name: Create Tag and Release on Master Workflow Completion
-
+name: Create Tag
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: [Go Build]
     types:
       - completed
 
