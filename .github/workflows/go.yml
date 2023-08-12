@@ -1,4 +1,4 @@
-name: go
+name: Trigger on Master Workflow Completion
 
 on:
   push:
@@ -39,29 +39,3 @@ jobs:
 
     - name: Test
       run: go test -v ./...
-
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
-    
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v1.0.0
-        release_name: git-hooks Release 1.0.0
-        body: Release notes for version 1.0.0
-    
-    - name: release binaries
-      runs-on: ubuntu-latest
-    - uses: actions/checkout@v3
-    - uses: wangyoucao577/go-release-action@v1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        asset_name: git-hooks-${{ matrix.goos }}-${{ matrix.goarch }}
-        compress_assets: OFF

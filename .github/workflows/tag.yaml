@@ -1,0 +1,30 @@
+name: Create Tag and Release on Master Workflow Completion
+
+on:
+  workflow_run:
+    workflows: ["Master Branch Workflow"]
+    types:
+      - completed
+
+jobs:
+  create-tag-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config user.name "Your Name"
+          git config user.email "your.email@example.com"
+          git tag -a "v${GITHUB_SHA::7}" -m "Tag created from commit ${GITHUB_SHA::7}"
+          git push origin "v${GITHUB_SHA::7}"
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: "v${GITHUB_SHA::7}"
+          release_name: "Release v${GITHUB_SHA::7}"
+          draft: false
+          prerelease: false
