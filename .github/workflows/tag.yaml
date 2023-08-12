@@ -5,8 +5,10 @@ on:
     types:
       - completed
 jobs:
-  build:
+  create-tag:
     runs-on: ubuntu-22.04
+     outputs:
+      created-tag: ${{ steps.bump-version.outputs.created-tag }}
     permissions:
       contents: write
     steps:
