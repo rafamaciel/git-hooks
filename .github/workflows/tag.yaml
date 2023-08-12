@@ -2,7 +2,7 @@ name: Create Tag and Release on Master Workflow Completion
 
 on:
   workflow_run:
-    workflows: ["Master Branch Workflow"]
+    workflows: ["Test"]
     types:
       - completed
 
