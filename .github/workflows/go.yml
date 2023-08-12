@@ -36,8 +36,7 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    - name: release linux/amd64
-      runs-on: ubuntu-latest
+    - name: release
       strategy:
         matrix:
           goos: [linux, windows, darwin]
